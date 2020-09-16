@@ -1,4 +1,4 @@
-from configCBIM.fileConfig import fileConfig
+from pdfCollectTest0728.configCBIM.fileConfig import fileConfig
 import docx
 
 class wordData:

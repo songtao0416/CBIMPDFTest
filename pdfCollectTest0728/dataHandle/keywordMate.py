@@ -1,5 +1,5 @@
-from dataGet.keywordGet import keyWordGet
-from dataGet.wordGet import wordData
+from pdfCollectTest0728.dataGet.keywordGet import keyWordGet
+from pdfCollectTest0728.dataGet.wordGet import wordData
 import re
 
 class keywordMate:

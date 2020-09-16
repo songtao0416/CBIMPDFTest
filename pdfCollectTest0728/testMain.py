@@ -1,8 +1,7 @@
-from dataHandle.saveExcel import saveXlsx
-from dataGet.wordGet import wordData
-from dataGet.txtGet import txtGet
-from dataHandle.moduleCut import moduleJudge
-from dataHandle.parameterJudge import parameterJudge
+from pdfCollectTest0728.dataGet.wordGet import wordData
+from pdfCollectTest0728.dataGet.txtGet import txtGet
+from pdfCollectTest0728.dataHandle.moduleCut import moduleJudge
+from pdfCollectTest0728.dataHandle.parameterJudge import parameterJudge
 
 def readWord():
     wordList = wordData().wordList

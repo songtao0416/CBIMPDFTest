@@ -1,4 +1,4 @@
-from dataGet import wordGet
+from pdfCollectTest0728.dataGet import wordGet
 import re
 
 
