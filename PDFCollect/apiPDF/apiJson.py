@@ -63,13 +63,18 @@ class apiJson:
         return firsttitleList, othertitleList
 
     def getParameter(self, newpdfText, formRows, othertitleList):
-        forms = formPDF(self.pdfPath).forms
-        formList = forms[0]
-        rightformList = forms[1]
-        print("*" * 10, "表格提取", "*" * 10)
-        formCSList = formCS(formRows, formList).formCSList
-        print("*" * 10, "右侧明细表中参数提取", "*" * 10)
-        rightCSList = rightForm(rightformList).rightCSList
+        try:
+            forms = formPDF(self.pdfPath).forms
+            formList = forms[0]
+            rightformList = forms[1]
+            print("*" * 10, "表格提取", "*" * 10)
+            formCSList = formCS(formRows, formList).formCSList
+            print("*" * 10, "右侧明细表中参数提取", "*" * 10)
+            rightCSList = rightForm(rightformList).rightCSList
+        except:
+            formList = []
+            formCSList = []
+            rightCSList = []
         print("*" * 10, "参数库对应参数提取", "*" * 10)
         csList, unPdfs = allCSHandle(newpdfText, othertitleList).csLists
         print("*" * 10, "新参数提取", "*" * 10)

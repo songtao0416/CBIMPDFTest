@@ -99,21 +99,24 @@ class judgePDF:
                         stRow = []
                         # 需要拼接的行一般不会超过6行，遍历接下来的6行
                         for j in range(1, 5):
-                            nextPt = newpdfText[i+j][1]
-                            # 并筛除一级标题
-                            if newpdfText[i+j][0] == nextTitleIndex:
-                                break
-                            elif re.match(r'\d+[.)）、]', nextPt):
-                                # 避免识别2000）为新的一行，判断第三个字符为数字时，继续拼接
-                                if nextPt[2] not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
+                            try:
+                                nextPt = newpdfText[i+j][1]
+                                # 并筛除一级标题
+                                if newpdfText[i+j][0] == nextTitleIndex:
                                     break
-                            elif re.match(r'[a-z][.)）]', nextPt):
-                                break
-                            # 此处去掉表格
-                            elif nextPt.count(' ') > 5:
-                                break
-                            # print("nextpt", nextPt)
-                            stRow.append(nextPt)
+                                elif re.match(r'\d+[.)）、]', nextPt):
+                                    # 避免识别2000）为新的一行，判断第三个字符为数字时，继续拼接
+                                    if nextPt[2] not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
+                                        break
+                                elif re.match(r'[a-z][.)）]', nextPt):
+                                    break
+                                # 此处去掉表格
+                                elif nextPt.count(' ') > 5:
+                                    break
+                                # print("nextpt", nextPt)
+                                stRow.append(nextPt)
+                            except:
+                                print(1)
                         pdfRow = pt + ''.join(stRow)
                         # print("pdfRow", pdfRow)
                         allpdfText.append([rowID, pdfRow])

@@ -2,7 +2,7 @@ import sys
 sys.path.append(r"F:\项目代码\Python代码\CBIM设计说明文档识别")
 from flask import Flask, request, jsonify
 import json
-from serverPDF.apiJson import apiJson
+from apiJson import apiJson
 
 app = Flask(__name__)
 

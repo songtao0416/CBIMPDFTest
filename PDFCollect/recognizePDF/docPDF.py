@@ -30,7 +30,8 @@ class docPDF:
         # fp = open(self.pdfPath, 'rb')
         # 接受上传的pdf文档
         fp = self.pdfPath
-        print(type(fp))
+        # print(fp)
+        # print(type(fp))
         # 从文件句柄创建一个pdf解析对象
         parser = PDFParser(fp)
         # 创建pdf文档对象，存储文档结构
@@ -62,7 +63,6 @@ class docPDF:
             LTRect:代表一个矩形。用来框住别的图片或者图表。
             LTCurve:代表一个贝塞尔曲线。
             """
-            results = []
             for x in layout:
                 # print(x.get_text())
                 if isinstance(x, LTImage):  # 图片对象
