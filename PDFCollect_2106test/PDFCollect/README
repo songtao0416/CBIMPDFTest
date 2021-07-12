@@ -1,0 +1,72 @@
+********************代码架构********************
+——PDFcollect
+    __config                        # 配置信息
+        __configPDF.py
+    __parameterExtract              # 识别并提取参数
+        __allParameter.py               # 提取pdf文本中，参数库已有参数
+        __formParameter.py              # 提取表格中的参数
+        __guifaRE.py                    # 提取规范类参数
+        __newParameter.py               # 提取新参数
+        __numberParameter.py            # 提取数值类参数
+        __rightForm.py                  # 提取pdf右侧明细表中参数
+        __textParameter.py              # 提取文本类参数
+    __recognizePDF                  # 识别PDF
+        __docPDF.py                     # 读取pdf文本，pdfminer
+        __firstTitle.py                 # 读取pdf文本中的一级标题信息
+        __otherTitle.py                 # 读取pdf文本中的二级标题信息
+        __formPDF.py                    # 读取pdf中的表格，pdfplumber
+        __judgePDF.py                   # 处理pdf文本，拼接、去空值等
+        __ocrPDF.py                     # 识别图片类pdf
+        __testMain.py                   # pdf运行主程序入口（单个文件测试）
+    __resources                         # 资源——读取和存储
+        __pdf_txt_file
+        __pdf_xls_file
+        __pdf文本
+        __参数库规则
+        ——aecuserdict.txt
+    __serverPDF                     # 功能代码
+        ——getAecdict.py                 # 读取建筑词典
+        ——getRule.py                    # 读取参数规则库
+        ——judgeKey.py                   # 关键词关系识别与处理
+        ——matchAecname.py               # 匹配词典，获取参数名称
+        ——readFile.py                   # 读取文件夹下的文件名和文件地址
+        ——saveExcel.py                  # 提取的参数，保存为excel格式数据
+        ——saveTXT.py                    # 识别的PDF信息，保存为txt格式数据
+    __apiPDF
+        ——apiJson.py                    # api调用的python主程序
+        ——apiFilePdf.py                 # api接口
+    __testPDF
+    __pdfMain.py                        # pdf运行主程序入口
+
+********************数据结构********************
+PDF：
+    allpdfText = [[rowid,data],[]]     pdf文档识别后，所有行数，行数+行文本
+    formRows = [[rowid,data],[]]    pdf文档中，表格所在行，行数+文本
+    cspdfText = [[rowid,data],[]]   pdf文档中，剔除表格行后的数据行，用于提取常规参数
+    ftitleList = [[rowid,title],[]]     一级标题所在行，行数+标题名
+    titleList = [{titleID,ftID,titleName，titlePid, titleLV, titleText},{}]      标题结构数据
+    formList = [table=[[rowdata],[]],[]]    表格数据
+
+Parameter:
+    NO:csGetList =[{id,name,type,lastType,keyWord,re,default,value,fatherTitleID,rowID,rowData}, {}]    旧版的参数构造
+    提取参数的构造，规则库参数、表格参数、明细表参数、新参数，共四类
+    csList = [{ID,fcsID,fcsName,csName,csValue,csType,titleID,lastText,nextText,rowID,rowData}]
+
+api接口：
+    请求参数：{"pdfPath": open(pdfPath, "rb"), "pdfName": pdfName, "pdfType": "1", "pdfMajor": "建筑"}
+            pdfType中：1为文字格式的pdf，0为图片格式的pdf；
+    返回参数：{"newpdfText": allpdfText, "getCSlist": getCSList, "titleList": titleList}
+        newpdfText = [[拼接后行数，拼接后内容],[]]
+        getCSlist = [{ID,fcsID,fcsName,csName,csValue,csType,titleID,lastText,nextText,rowID,rowData}]
+        titleList = [{titleID,ftID,titleName，titlePid, titleLV, titleText},{}]
+
+
+
+
+
+
+********************防坑指南********************
+PDF识别问题：
+    1.pdf多列数据读取时，顺序错乱；
+        修改pdfminer中的水平权重，先水平再垂直；修改位置为layout.py中的boxes_flow=-0.5
+    2.
